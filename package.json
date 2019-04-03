@@ -1,0 +1,25 @@
+{
+  "name": "boxes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Tristan Shelton <tristan.m.shelton@gmail.com",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "@types/webpack": "^4.4.27",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.4.1",
+    "webpack": "4",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
+    "@typescript-eslint/parser": "^1.6.0",
+    "eslint": "^5.16.0"
+  }
+}
