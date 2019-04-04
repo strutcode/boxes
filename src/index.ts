@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs'
+import PanCamera from './PanCamera'
 
 const el: HTMLDivElement = document.getElementById('app') as HTMLDivElement
 const canvas: HTMLCanvasElement = document.createElement('canvas')
@@ -15,7 +16,10 @@ const engine = new BABYLON.Engine(canvas, false)
 const scene = new BABYLON.Scene(engine)
 
 BABYLON.MeshBuilder.CreateBox('cube', { size: 1 })
-const camera = new BABYLON.ArcRotateCamera('camera', Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, 0), scene)
+// const camera = new BABYLON.ArcRotateCamera('camera', Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, 0), scene)
+// camera.attachControl(canvas, true)
+
+const camera = new PanCamera('camera', new BABYLON.Vector3(0, 0, -10), scene)
 camera.attachControl(canvas, true)
 
 new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(1, 1, 0), scene)
