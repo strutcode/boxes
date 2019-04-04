@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+
 export default {
   mode: 'development',
   entry: {
@@ -8,7 +11,12 @@ export default {
       {
         test: /\.ts$/,
         use: 'ts-loader',
-      }
-    ]
-  }
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/template.html',
+    }),
+  ],
 }

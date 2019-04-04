@@ -4,11 +4,13 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
+    "start": "webpack-dev-server",
     "test": "mocha"
   },
   "author": "Tristan Shelton <tristan.m.shelton@gmail.com",
   "license": "UNLICENSED",
   "devDependencies": {
+    "@types/html-webpack-plugin": "^3.2.0",
     "@types/node": "^11.13.0",
     "@types/webpack": "^4.4.27",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
@@ -16,10 +18,16 @@
     "eslint": "5.3.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "html-webpack-plugin": "^3.2.0",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.0.3",
     "typescript": "^3.4.1",
     "webpack": "4",
-    "webpack-cli": "^3.3.0"
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "babylonjs": "^3.3.0",
+    "ws": "^6.2.1"
   }
 }
