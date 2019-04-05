@@ -16,10 +16,16 @@
     "es6": true,
     "worker": true
   },
+  "settings": {
+    "import/resolver": "webpack"
+  },
   "rules": {
     "semi": ["error", "never"],
     "brace-style": ["error", "stroustrup"],
     "@typescript-eslint/indent": ["error", 2],
-    "no-new": 0
+    "no-new": 0,
+    "lines-between-class-members": ["error", "always", {
+      "exceptAfterSingleLine": true
+    }]
   }
 }
