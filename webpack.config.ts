@@ -23,6 +23,7 @@ const config: webpack.Configuration = {
     new HtmlWebpackPlugin({
       template: './src/template.html',
     }),
+    new webpack.IgnorePlugin(/(oimo|earcut|cannon)/),
   ],
 }
 
