@@ -26,6 +26,15 @@
     "no-new": 0,
     "lines-between-class-members": ["error", "always", {
       "exceptAfterSingleLine": true
+    }],
+    "no-multi-assign": "off",
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      "singleline": {
+        "delimiter": "comma"
+      },
+      "multiline": {
+        "delimiter": "none"
+      }
     }]
   }
 }
