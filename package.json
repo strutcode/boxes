@@ -28,6 +28,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "@flyover/box2d": "^1.0.0",
     "babylonjs": "^3.3.0",
     "ws": "^6.2.1"
   }

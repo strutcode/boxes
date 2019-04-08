@@ -23,7 +23,9 @@
     "semi": ["error", "never"],
     "brace-style": ["error", "stroustrup"],
     "@typescript-eslint/indent": ["error", 2],
-    "no-new": 0,
+    "no-new": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
     "lines-between-class-members": ["error", "always", {
       "exceptAfterSingleLine": true
     }],
@@ -36,5 +38,20 @@
         "delimiter": "none"
       }
     }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.*"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "Sinon": "readonly",
+        "stub": "readonly"
+      },
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }]
+      }
+    }
+  ]
 }
