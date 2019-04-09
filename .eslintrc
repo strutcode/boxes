@@ -46,11 +46,13 @@
         "mocha": true
       },
       "globals": {
+        "expect": "readonly",
         "Sinon": "readonly",
         "stub": "readonly"
       },
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }]
+        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
+        "no-unused-expressions": "off"
       }
     }
   ]
