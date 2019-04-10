@@ -6,7 +6,7 @@ interface ZoomEvent {
 }
 
 export default class PanCamera extends FreeCamera {
-  public unitRatio: number = 0.01
+  public unitRatio: number = 0.04
   public zoomRatio: number = 0.1
   public invertX: boolean = false
   public invertY: boolean = false
@@ -34,9 +34,9 @@ export default class PanCamera extends FreeCamera {
 
     element.addEventListener('wheel', (ev: WheelEvent): void => {
       const { deltaY } = ev
-      const delta = deltaY * (this.invertZ ? 1 : -1)
+      const delta = Math.sign(deltaY) * (this.invertZ ? 1 : -1)
 
-      this.position.z += delta * this.zoomRatio
+      this.position.z *= 1 - (delta * this.zoomRatio)
       this.onZoomObservable.notifyObservers({
         camera: this,
         delta,
@@ -47,7 +47,8 @@ export default class PanCamera extends FreeCamera {
   }
 
   public pan(deltaX: number, deltaY: number): void {
-    this.position.x += deltaX * this.unitRatio * (this.invertX ? 1 : -1)
-    this.position.y += deltaY * this.unitRatio * (this.invertY ? 1 : -1)
+    const scrollRatio = Math.abs(this.position.z * this.unitRatio)
+    this.position.x += deltaX * scrollRatio * this.unitRatio * (this.invertX ? 1 : -1)
+    this.position.y += deltaY * scrollRatio * this.unitRatio * (this.invertY ? 1 : -1)
   }
 }

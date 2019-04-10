@@ -27,7 +27,7 @@ export default class PanCamera2d extends PanCamera {
       this.orthoRight = size * aspect
     }
 
-    this.onZoomObservable.add((ev) => {
+    this.onZoomObservable.add((): void => {
       setAspect()
     })
 
