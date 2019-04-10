@@ -75,9 +75,23 @@ const positionIterations = 2
 
 let frames = 0
 
+const fpsMonitor = document.createElement('div')
+Object.assign(fpsMonitor.style, {
+  position: 'fixed',
+  top: '1em',
+  right: '1em',
+  color: '#fff',
+})
+document.body.appendChild(fpsMonitor)
+
+setInterval((): void => {
+  fpsMonitor.innerText = `${frames} fps`
+  frames = 0
+}, 1000)
+
 setInterval((): void => {
   world.Step(timeStep, velocityIterations, positionIterations)
-}, timeStep)
+}, 1000 / 30)
 
 engine.runRenderLoop((): void => {
   const position: box2d.b2Vec2 = body.GetPosition()
@@ -90,8 +104,3 @@ engine.runRenderLoop((): void => {
   scene.render()
   frames++
 })
-
-// setInterval(() => {
-//   console.log('framerate:', frames)
-//   frames = 0
-// }, 1000)
