@@ -1,0 +1,19 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: forts
+      POSTGRES_DB: forts
+  web:
+    depends_on:
+      - postgres
+    build: .
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://forts@postgres/forts
+      NODE_ENV: development
+    command: npm run dev
