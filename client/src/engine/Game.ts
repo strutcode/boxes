@@ -1,6 +1,7 @@
-import Graphics, { CubeSprite } from './Graphics'
-import Physics, { PhysicsBody } from './Physics'
+import Graphics from './Graphics'
+import Physics from './Physics'
 import Log from './Log'
+import Entity from './Entity'
 
 export enum GameState {
   MAINMENU,
@@ -10,39 +11,34 @@ export enum GameState {
 }
 
 export default class Game {
-  public readonly state: GameState = GameState.MAINMENU
-  private lastTime: number = performance.now()
-  private box: PhysicsBody
-  private sprite: CubeSprite
+  private static $state: GameState = GameState.MAINMENU
+  private static lastTime: number = performance.now()
+  private static entities: Entity[] = []
 
-  public constructor() {
+  public static initialize(): void {
     Log.info('Game starting')
     Graphics.initialize()
     Physics.initialize()
-
-    const floor = Physics.createBox(20, true)
-    floor.setPosition(0, 20)
-
-    this.box = Physics.createBox(1)
-    this.box.setRotation(44)
-    this.sprite = Graphics.addCube(1)
 
     window.requestAnimationFrame((): void => {
       this.update()
     })
   }
 
-  private update(): void {
+  private static update(): void {
     const currentTime = performance.now()
     const dt = (currentTime - this.lastTime) / 1000
 
+    let i
+    for (i = 0; i < this.entities.length; i++) {
+      this.entities[i].onUpdate()
+    }
+
     Physics.update(dt)
 
-    this.sprite.setTransform(
-      this.box.transform.x,
-      this.box.transform.y,
-      this.box.transform.z,
-    )
+    for (i = 0; i < this.entities.length; i++) {
+      this.entities[i].onPreRender()
+    }
     Graphics.render()
 
     this.lastTime = currentTime
@@ -50,5 +46,13 @@ export default class Game {
     window.requestAnimationFrame((): void => {
       this.update()
     })
+  }
+
+  public static $addEntity(ent: Entity): void {
+    this.entities.push(ent)
+  }
+
+  public static $remEntity(ent: Entity): void {
+    this.entities = this.entities.filter(e => e !== ent)
   }
 }

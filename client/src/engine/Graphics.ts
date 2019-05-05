@@ -7,8 +7,8 @@ import Log from './Log'
 export class CubeSprite {
   private mesh: Mesh
 
-  public constructor() {
-    this.mesh = MeshBuilder.CreateBox('cube', { size: 2 })
+  public constructor(size: number) {
+    this.mesh = MeshBuilder.CreateBox('cube', { size })
   }
 
   public setTransform(x: number, y: number, z: number): void {
@@ -61,6 +61,6 @@ export default class Graphics {
   }
 
   public static addCube(size: number): CubeSprite {
-    return new CubeSprite()
+    return new CubeSprite(size)
   }
 }
