@@ -20,7 +20,7 @@ export default class Game {
     Graphics.initialize()
     Physics.initialize()
 
-    window.requestAnimationFrame((): void => {
+    window.requestAnimationFrame(() => {
       this.update()
     })
   }
@@ -43,7 +43,7 @@ export default class Game {
 
     this.lastTime = currentTime
 
-    window.requestAnimationFrame((): void => {
+    window.requestAnimationFrame(() => {
       this.update()
     })
   }

@@ -1,7 +1,6 @@
 import Component from './Component'
 import Graphics, { CubeSprite } from './Graphics'
 import Entity from './Entity'
-import PhysicsComponent from './PhysicsComponent'
 
 export default class SpriteComponent extends Component {
   public sprite: CubeSprite

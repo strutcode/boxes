@@ -37,7 +37,12 @@
       "multiline": {
         "delimiter": "none"
       }
-    }]
+    }],
+    "@typescript-eslint/explicit-function-return-type": ["error", {
+      "allowExpressions": true,
+      "allowTypedFunctionExpressions": true
+    }],
+    "no-dupe-class-members": "off"
   },
   "overrides": [
     {

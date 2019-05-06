@@ -47,11 +47,11 @@ export default class Graphics {
     this.camera = new PanCamera2d('camera', new Vector3(0, 0, -20), this.scene)
     this.camera.attachControl(canvas, true)
 
-    window.addEventListener('resize', (): void => {
+    window.addEventListener('resize', () => {
       this.engine.resize()
     })
 
-    // this.engine.runRenderLoop((): void => {
+    // this.engine.runRenderLoop(() => {
     //   this.scene.render()
     // })
   }

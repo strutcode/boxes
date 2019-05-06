@@ -3,12 +3,14 @@ import {
   b2Vec2, b2World, b2BodyDef, b2PolygonShape, b2Body, b2FixtureDef, b2BodyType, b2Shape, b2Fixture,
 } from '@flyover/box2d'
 import Log from './Log'
+import Transform from './Transform'
 
 const degreesToRadians = 0.0174533
 const frameRate = 30
 const timeStep = 1 / frameRate
 const velocityIterations = 6
 const positionIterations = 2
+
 export class PhysicsBody {
   private bodyDef: b2BodyDef
   private body: b2Body
@@ -22,12 +24,17 @@ export class PhysicsBody {
     this.body = world.CreateBody(this.bodyDef)
   }
 
-  public setPosition(x: number, y: number): void {
-    this.body.SetPositionXY(x, y)
-  }
-
-  public setRotation(degrees: number): void {
-    this.body.SetAngle(degrees * degreesToRadians)
+  public setTransform(t: Transform): void;
+  public setTransform(x: number, y: number, r: number): void;
+  public setTransform(x: number | Transform, y?: number, r?: number): void {
+    if (typeof x !== 'number') {
+      this.body.SetPositionXY(x.x, x.y)
+      this.body.SetAngle(x.r * degreesToRadians)
+    }
+    else {
+      this.body.SetPositionXY(x, y as number)
+      this.body.SetAngle((r as number) * degreesToRadians)
+    }
   }
 
   public setBox(width: number, height: number): void {
@@ -48,11 +55,11 @@ export class PhysicsBody {
     this.fixture = this.body.CreateFixture(this.fixtureDef)
   }
 
-  public get transform(): any {
+  public get transform(): Transform {
     return {
       x: this.body.GetPosition().x,
       y: this.body.GetPosition().y,
-      z: this.body.GetAngle(),
+      r: this.body.GetAngle(),
     }
   }
 }
@@ -70,7 +77,7 @@ export default class Physics {
     this.world = new b2World(this.gravity)
 
     // Log.debug('- Starting world step loop')
-    // setInterval((): void => {
+    // setInterval(() => {
     //   this.world.Step(timeStep, velocityIterations, positionIterations)
     // }, 1000 / frameRate)
   }

@@ -11,8 +11,7 @@ export default class PhysicsComponent extends Component {
   }
 
   public onCreate(entity: Entity): void {
-    this.body.setPosition(entity.transform.x, entity.transform.y)
-    this.body.setRotation(entity.transform.r)
+    this.body.setTransform(entity.transform)
   }
 
   public onUpdate(entity: Entity): void {
@@ -20,6 +19,6 @@ export default class PhysicsComponent extends Component {
 
     entity.transform.x = transform.x
     entity.transform.y = transform.y
-    entity.transform.r = transform.z
+    entity.transform.r = transform.r
   }
 }
