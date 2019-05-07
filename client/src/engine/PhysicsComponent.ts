@@ -1,13 +1,28 @@
 import Component from './Component'
 import Physics, { PhysicsBody } from './Physics'
 import Entity from './Entity'
+import Vector from './Vector'
+
+interface PhysicsJointOptions {
+  size?: number | Vector
+  fixed?: boolean
+}
 
 export default class PhysicsComponent extends Component {
   public body: PhysicsBody
 
-  public constructor(size: number = 1, fixed: boolean = false) {
+  public constructor(options: PhysicsJointOptions = {}) {
     super('physics')
-    this.body = Physics.createBox(size, fixed)
+
+    let { size } = options
+    if (typeof size === 'number') {
+      size = new Vector(size, size)
+    }
+    if (typeof size === 'undefined') {
+      size = new Vector(1, 1)
+    }
+
+    this.body = Physics.createBox(size, options.fixed)
   }
 
   public onCreate(entity: Entity): void {

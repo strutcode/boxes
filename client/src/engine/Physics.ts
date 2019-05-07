@@ -4,6 +4,7 @@ import {
 } from '@flyover/box2d'
 import Log from './Log'
 import Transform from './Transform'
+import Vector from './Vector'
 
 const degreesToRadians = 0.0174533
 const frameRate = 30
@@ -91,9 +92,9 @@ export default class Physics {
     }
   }
 
-  public static createBox(size: number, fixed: boolean = false): PhysicsBody {
+  public static createBox(size: Vector, fixed: boolean = false): PhysicsBody {
     const body = new PhysicsBody(this.world, fixed)
-    body.setBox(size, size)
+    body.setBox(size.x, size.y)
     return body
   }
 }

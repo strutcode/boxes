@@ -3,12 +3,13 @@ import {
 } from 'babylonjs'
 import PanCamera2d from './PanCamera2d'
 import Log from './Log'
+import Vector from './Vector'
 
 export class CubeSprite {
   private mesh: Mesh
 
-  public constructor(size: number) {
-    this.mesh = MeshBuilder.CreateBox('cube', { size })
+  public constructor(width: number, height: number) {
+    this.mesh = MeshBuilder.CreateBox('cube', { width, height })
   }
 
   public setTransform(x: number, y: number, z: number): void {
@@ -60,7 +61,7 @@ export default class Graphics {
     this.scene.render()
   }
 
-  public static addCube(size: number): CubeSprite {
-    return new CubeSprite(size)
+  public static addCube(size: Vector): CubeSprite {
+    return new CubeSprite(size.x, size.y)
   }
 }
