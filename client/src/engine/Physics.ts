@@ -63,6 +63,16 @@ export class PhysicsBody {
       r: this.body.GetAngle(),
     }
   }
+
+  public addForce(amount: Vector): void {
+    this.body.ApplyForce({
+      x: amount.x,
+      y: amount.y,
+    }, {
+      x: 0,
+      y: 0,
+    })
+  }
 }
 
 export default class Physics {

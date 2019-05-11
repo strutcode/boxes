@@ -22,6 +22,7 @@ export class CubeSprite {
 export default class Graphics {
   private static engine: Engine
   private static scene: Scene
+  private static element: HTMLDivElement
   public static camera: PanCamera2d
 
   public static initialize(): void {
@@ -39,6 +40,8 @@ export default class Graphics {
       height: '100%',
     })
 
+    this.element = el
+
     Log.debug('- Starting engine')
     this.engine = new Engine(canvas, false)
     this.scene = new Scene(this.engine)
@@ -51,10 +54,6 @@ export default class Graphics {
     window.addEventListener('resize', () => {
       this.engine.resize()
     })
-
-    // this.engine.runRenderLoop(() => {
-    //   this.scene.render()
-    // })
   }
 
   public static render(): void {
@@ -63,5 +62,9 @@ export default class Graphics {
 
   public static addCube(size: Vector): CubeSprite {
     return new CubeSprite(size.x, size.y)
+  }
+
+  public static getDomElement(): HTMLDivElement {
+    return this.element
   }
 }

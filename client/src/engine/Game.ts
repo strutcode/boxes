@@ -48,6 +48,10 @@ export default class Game {
     })
   }
 
+  public static on(event: string, callback: (event: any) => any): void {
+    window.addEventListener(event, callback)
+  }
+
   public static $addEntity(ent: Entity): void {
     this.entities.push(ent)
   }

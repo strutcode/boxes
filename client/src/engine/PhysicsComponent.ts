@@ -36,4 +36,8 @@ export default class PhysicsComponent extends Component {
     entity.transform.y = transform.y
     entity.transform.r = transform.r
   }
+
+  public addForce(amount: Vector): void {
+    this.body.addForce(amount)
+  }
 }
