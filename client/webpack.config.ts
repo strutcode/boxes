@@ -14,10 +14,14 @@ const config: webpack.Configuration = {
         test: /\.ts$/,
         use: 'ts-loader',
       },
+      {
+        test: /\.glsl$/,
+        use: 'raw-loader',
+      },
     ],
   },
   resolve: {
-    extensions: ['.js', '.json', '.ts'],
+    extensions: ['.js', '.json', '.ts', '.glsl'],
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -3966,6 +3966,14 @@ raw-body@2.3.3:
     iconv-lite "0.4.23"
     unpipe "1.0.0"
 
+raw-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-2.0.0.tgz#e2813d9e1e3f80d1bbade5ad082e809679e20c26"
+  integrity sha512-kZnO5MoIyrojfrPWqrhFNLZemIAX8edMOCp++yC5RKxzFB3m92DqKNhKlU6+FvpOhWtvyh3jOaD7J6/9tpdIKg==
+  dependencies:
+    loader-utils "^1.1.0"
+    schema-utils "^1.0.0"
+
 rc@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
@@ -4906,6 +4914,11 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+twgl.js@^4.9.1:
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/twgl.js/-/twgl.js-4.9.1.tgz#60304fa39c8c871432b849836cf345a27fddac24"
+  integrity sha512-uI7oJqsbNJZ1Oo4sKvCLw2zxW+WM8HapgbgE/0DnkMYkNPI2+uDkKd/lnTpC2sVV+MN1J3Ryc0AbruwPFOhIRg==
 
 type-check@~0.3.2:
   version "0.3.2"

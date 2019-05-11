@@ -2,30 +2,26 @@ import Graphics from './Graphics'
 import Physics from './Physics'
 import Log from './Log'
 import Entity from './Entity'
-
-export enum GameState {
-  MAINMENU,
-  LOADING,
-  RUNNING,
-  PAUSED
-}
+import Scene from './Scene'
 
 export default class Game {
-  private static $state: GameState = GameState.MAINMENU
   private static lastTime: number = performance.now()
   private static entities: Entity[] = []
+  private static activeScene: Scene | null = null
 
   public static initialize(): void {
     Log.info('Game starting')
     Graphics.initialize()
     Physics.initialize()
 
-    window.requestAnimationFrame(() => {
-      this.update()
+    window.requestAnimationFrame((t) => {
+      this.update(t)
     })
   }
 
-  private static update(): void {
+  public static runScene(scene: Scene): void {}
+
+  private static update(time: number): void {
     const currentTime = performance.now()
     const dt = (currentTime - this.lastTime) / 1000
 
@@ -39,16 +35,16 @@ export default class Game {
     for (i = 0; i < this.entities.length; i++) {
       this.entities[i].onPreRender()
     }
-    Graphics.render()
+    Graphics.render(time)
 
     this.lastTime = currentTime
 
-    window.requestAnimationFrame(() => {
-      this.update()
+    window.requestAnimationFrame((t) => {
+      this.update(t)
     })
   }
 
-  public static on(event: string, callback: (event: any) => any): void {
+  public static on(event: string, callback: (event: Event) => void): void {
     window.addEventListener(event, callback)
   }
 

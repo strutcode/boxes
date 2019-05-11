@@ -1,14 +1,15 @@
 import Component from './Component'
-import Graphics, { CubeSprite } from './Graphics'
+import Graphics from './Graphics'
 import Entity from './Entity'
 import Vector from './Vector'
+import Sprite from './Sprite'
 
 interface SpriteComponentOptions {
   size?: number | Vector
 }
 
 export default class SpriteComponent extends Component {
-  public sprite: CubeSprite
+  public sprite: Sprite
 
   public constructor(options: SpriteComponentOptions = {}) {
     super('sprite')
