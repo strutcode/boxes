@@ -69,8 +69,8 @@ export class PhysicsBody {
       x: amount.x,
       y: amount.y,
     }, {
-      x: 0,
-      y: 0,
+      x: this.transform.x,
+      y: this.transform.y,
     })
   }
 }
