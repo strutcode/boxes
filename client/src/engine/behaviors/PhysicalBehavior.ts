@@ -1,3 +1,4 @@
+import Game from '../Game'
 import Behavior from './Behavior'
 import Entity from '../Entity'
 import Vector from '../util/Vector'
@@ -9,17 +10,12 @@ interface PhysicalBehaviorOptions {
 }
 
 export default class PhysicalBehavior extends Behavior {
-  public body: PhysicsBody | undefined
-  public options: PhysicalBehaviorOptions
+  public body: PhysicsBody
 
   public constructor(options: PhysicalBehaviorOptions = {}) {
     super('physics')
 
-    this.options = options
-  }
-
-  public onCreate(entity: Entity): void {
-    const { size } = this.options
+    const { size } = options
     let vecSize: Vector
 
     if (size instanceof Vector) {
@@ -32,7 +28,10 @@ export default class PhysicalBehavior extends Behavior {
       vecSize = new Vector(1, 1)
     }
 
-    this.body = entity.game.physics.createBox(vecSize, this.options.fixed)
+    this.body = Game.physics.createBox(vecSize, options.fixed)
+  }
+
+  public onCreate(entity: Entity): void {
     this.body.setTransform(entity.transform)
   }
 

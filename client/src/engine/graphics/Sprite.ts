@@ -46,9 +46,6 @@ export default class Sprite {
     this.transform.x = x
     this.transform.y = y
     this.transform.r = r
-    // this.mesh.position.x = x
-    // this.mesh.position.y = y
-    // this.mesh.rotation.z = z
   }
 
   public render(gl: WebGLRenderingContext): void {

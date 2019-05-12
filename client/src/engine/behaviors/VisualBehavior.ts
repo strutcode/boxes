@@ -1,3 +1,4 @@
+import Game from '../Game'
 import Behavior from './Behavior'
 import Entity from '../Entity'
 import Vector from '../util/Vector'
@@ -9,16 +10,11 @@ interface VisualBehaviorOptions {
 
 export default class VisualBehavior extends Behavior {
   public sprite: Sprite | undefined
-  private options: VisualBehaviorOptions
 
   public constructor(options: VisualBehaviorOptions = {}) {
     super('sprite')
 
-    this.options = options
-  }
-
-  public onCreate(entity: Entity): void {
-    const { size } = this.options
+    const { size } = options
     let vecSize
 
     if (size instanceof Vector) {
@@ -31,7 +27,7 @@ export default class VisualBehavior extends Behavior {
       vecSize = new Vector(1, 1)
     }
 
-    this.sprite = entity.game.graphics.createSprite(vecSize)
+    this.sprite = Game.graphics.createSprite(vecSize)
   }
 
   public onPreRender(entity: Entity): void {

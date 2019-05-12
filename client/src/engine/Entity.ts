@@ -10,16 +10,14 @@ export interface EntityOptions {
 }
 
 export default class Entity {
-  public readonly game: Game
   public readonly transform: Transform = new Transform()
   private behaviors: Behavior[]
 
-  public constructor(game: Game, options: EntityOptions = {}) {
+  public constructor(options: EntityOptions = {}) {
     if (options.x) this.transform.x = options.x
     if (options.y) this.transform.y = options.y
     if (options.r) this.transform.r = options.r
 
-    this.game = game
     this.behaviors = options.behavior || []
     for (let i = 0; i < this.behaviors.length; i++) {
       this.behaviors[i].onCreate(this)

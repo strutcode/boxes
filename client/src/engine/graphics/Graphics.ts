@@ -1,7 +1,3 @@
-// import {
-//   Engine, Scene, Vector3, MeshBuilder, Mesh, HemisphericLight,
-// } from 'babylonjs'
-// import PanCamera2d from './PanCamera2d'
 import * as twgl from 'twgl.js'
 import Log from '../util/Log'
 import Vector from '../util/Vector'
@@ -10,10 +6,7 @@ import Sprite from './Sprite'
 const { m4 } = twgl
 
 export default class Graphics {
-  // private static engine: Engine
-  // private static scene: Scene
   private element: HTMLDivElement
-  // public static camera: PanCamera2d
 
   private gl: WebGLRenderingContext
   private sprites: Sprite[] = []
@@ -36,27 +29,14 @@ export default class Graphics {
     this.element = el
 
     Log.debug('- Starting engine')
-    // this.engine = new Engine(canvas, false)
-    // this.scene = new Scene(this.engine)
-
-    // new HemisphericLight('light1', new Vector3(1, 1, 0), this.scene)
-
-    // this.camera = new PanCamera2d('camera', new Vector3(0, 0, -20), this.scene)
-    // this.camera.attachControl(canvas, true)
-
-    // window.addEventListener('resize', () => {
-    //   this.engine.resize()
-    // })
     const ctx = canvas.getContext('webgl')
     if (!ctx) {
-      throw new Error('Failed ot initialize webgl')
+      throw new Error('Failed to initialize webgl')
     }
     this.gl = ctx
   }
 
   public render(time: number): void {
-    // this.scene.render()
-
     const { gl } = this
 
     gl.clearColor(0.5, 0.5, 0.5, 1)

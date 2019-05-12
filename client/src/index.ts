@@ -3,10 +3,10 @@ import PhysicalBehavior from './engine/behaviors/PhysicalBehavior'
 import VisualBehavior from './engine/behaviors/VisualBehavior'
 import ControlBehavior from './ControlBehavior'
 
-const game = new Game()
+Game.initialize()
 
 // new Strut(new Vector(0, 0), new Vector(0, -10))
-game.createEntity({
+Game.createEntity({
   behavior: [
     new PhysicalBehavior(),
     new VisualBehavior(),
@@ -14,7 +14,7 @@ game.createEntity({
   ],
 })
 
-game.createEntity({
+Game.createEntity({
   y: 20,
   r: 30,
   behavior: [

@@ -5,14 +5,14 @@ import Entity, { EntityOptions } from './Entity'
 import Scene from './Scene'
 
 export default class Game {
-  private lastTime: number = performance.now()
-  private entities: Entity[] = []
-  private activeScene: Scene | null = null
+  private static lastTime: number = performance.now()
+  private static entities: Entity[] = []
+  private static activeScene: Scene | null = null
 
-  public readonly graphics: Graphics
-  public readonly physics: Physics
+  public static graphics: Graphics
+  public static physics: Physics
 
-  public constructor() {
+  public static initialize(): void {
     Log.info('Game starting')
     this.graphics = new Graphics()
     this.physics = new Physics()
@@ -22,7 +22,7 @@ export default class Game {
     })
   }
 
-  private update(time: number): void {
+  private static update(time: number): void {
     const currentTime = performance.now()
     const dt = (currentTime - this.lastTime) / 1000
 
@@ -45,12 +45,12 @@ export default class Game {
     })
   }
 
-  // public on(event: string, callback: (event: Event) => void): void {
+  // public static on(event: string, callback: (event: Event) => void): void {
   //   window.addEventListener(event, callback)
   // }
 
-  public createEntity(options: EntityOptions): Entity {
-    const entity = new Entity(this, options)
+  public static createEntity(options: EntityOptions): Entity {
+    const entity = new Entity(options)
 
     this.entities.push(entity)
 
