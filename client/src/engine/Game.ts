@@ -1,7 +1,7 @@
-import Graphics from './Graphics'
-import Physics from './Physics'
-import Log from './Log'
-import Entity from './Entity'
+import Graphics from './graphics/Graphics'
+import Physics from './physics/Physics'
+import Log from './util/Log'
+import Entity, { EntityOptions } from './Entity'
 import Scene from './Scene'
 
 export default class Game {
@@ -46,6 +46,10 @@ export default class Game {
 
   public static on(event: string, callback: (event: Event) => void): void {
     window.addEventListener(event, callback)
+  }
+
+  public static createEntity(options: EntityOptions): Entity {
+    return new Entity(options)
   }
 
   public static $addEntity(ent: Entity): void {

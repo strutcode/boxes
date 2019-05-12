@@ -3,8 +3,8 @@
 // } from 'babylonjs'
 // import PanCamera2d from './PanCamera2d'
 import * as twgl from 'twgl.js'
-import Log from './Log'
-import Vector from './Vector'
+import Log from '../util/Log'
+import Vector from '../util/Vector'
 import Sprite from './Sprite'
 
 const { m4 } = twgl
@@ -81,7 +81,7 @@ export default class Graphics {
     return m4.multiply(projection, view)
   }
 
-  public static addCube(size: Vector): Sprite {
+  public static createSprite(size: Vector): Sprite {
     const sprite = new Sprite(this.gl, size.x, size.y)
 
     this.sprites.push(sprite)

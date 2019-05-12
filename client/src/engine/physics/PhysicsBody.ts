@@ -1,18 +1,13 @@
 /* eslint-disable new-cap */
 import {
-  b2Vec2, b2World, b2BodyDef, b2PolygonShape, b2Body, b2FixtureDef, b2BodyType, b2Shape, b2Fixture,
+  b2BodyDef, b2Body, b2Shape, b2FixtureDef, b2Fixture, b2World, b2BodyType, b2PolygonShape,
 } from '@flyover/box2d'
-import Log from './Log'
-import Transform from './Transform'
-import Vector from './Vector'
+import Transform from '../util/Transform'
+import Vector from '../util/Vector'
 
 const degreesToRadians = 0.0174533
-const frameRate = 30
-const timeStep = 1 / frameRate
-const velocityIterations = 6
-const positionIterations = 2
 
-export class PhysicsBody {
+export default class PhysicsBody {
   private bodyDef: b2BodyDef
   private body: b2Body
   private shape: b2Shape | undefined
@@ -72,39 +67,5 @@ export class PhysicsBody {
       x: this.transform.x,
       y: this.transform.y,
     })
-  }
-}
-
-export default class Physics {
-  public static gravity: b2Vec2
-  private static world: b2World
-  private static time: number = 0
-
-  public static initialize(): void {
-    Log.info('Initializing physics')
-
-    Log.debug('- Create world')
-    this.gravity = new b2Vec2(0, 9.87)
-    this.world = new b2World(this.gravity)
-
-    // Log.debug('- Starting world step loop')
-    // setInterval(() => {
-    //   this.world.Step(timeStep, velocityIterations, positionIterations)
-    // }, 1000 / frameRate)
-  }
-
-  public static update(delta: number): void {
-    this.time += delta
-
-    while (this.time >= timeStep) {
-      this.world.Step(timeStep, velocityIterations, positionIterations)
-      this.time -= timeStep
-    }
-  }
-
-  public static createBox(size: Vector, fixed: boolean = false): PhysicsBody {
-    const body = new PhysicsBody(this.world, fixed)
-    body.setBox(size.x, size.y)
-    return body
   }
 }

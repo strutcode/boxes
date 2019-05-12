@@ -1,17 +1,18 @@
-import Component from './Component'
-import Physics, { PhysicsBody } from './Physics'
-import Entity from './Entity'
-import Vector from './Vector'
+import Behavior from './Behavior'
+import Physics from '../physics/Physics'
+import Entity from '../Entity'
+import Vector from '../util/Vector'
+import PhysicsBody from '../physics/PhysicsBody'
 
-interface PhysicsJointOptions {
+interface PhysicalBehaviorOptions {
   size?: number | Vector
   fixed?: boolean
 }
 
-export default class PhysicsComponent extends Component {
+export default class PhysicalBehavior extends Behavior {
   public body: PhysicsBody
 
-  public constructor(options: PhysicsJointOptions = {}) {
+  public constructor(options: PhysicalBehaviorOptions = {}) {
     super('physics')
 
     let { size } = options

@@ -1,13 +1,13 @@
-import Component from './engine/Component'
+import Behavior from './engine/behaviors/Behavior'
 import Entity from './engine/Entity'
-import PhysicsComponent from './engine/PhysicsComponent'
-import Vector from './engine/Vector'
+import PhysicalBehavior from './engine/behaviors/PhysicalBehavior'
+import Vector from './engine/util/Vector'
 
 interface ActiveMap {
   [key: string]: boolean
 }
 
-export default class ControlComponent extends Component {
+export default class ControlBehavior extends Behavior {
   public speed = 10
   private active: ActiveMap = {}
 
@@ -26,7 +26,7 @@ export default class ControlComponent extends Component {
   }
 
   public onUpdate(entity: Entity): void {
-    const physics = entity.getComponent('physics') as PhysicsComponent
+    const physics = entity.getComponent('physics') as PhysicalBehavior
 
     if (this.active.a) {
       physics.addForce(new Vector(-this.speed, 0))

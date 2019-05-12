@@ -1,18 +1,19 @@
-import Component from './Component'
+import Behavior from './behaviors/Behavior'
 import Game from './Game'
-import Transform from './Transform'
+import Transform from './util/Transform'
 
-interface EntityOptions {
+export interface EntityOptions {
   x?: number
   y?: number
   r?: number
+  behavior?: Behavior[]
 }
 
 export default class Entity {
-  private components: Component[]
+  private behaviors: Behavior[]
   public readonly transform: Transform = new Transform()
 
-  public constructor(components: Component[], options: EntityOptions = {}) {
+  public constructor(options: EntityOptions = {}) {
     const defaults: EntityOptions = {
       x: 0,
       y: 0,
@@ -21,16 +22,16 @@ export default class Entity {
 
     Object.assign(this.transform, defaults, options)
 
-    this.components = components
-    for (let i = 0; i < this.components.length; i++) {
-      this.components[i].onCreate(this)
+    this.behaviors = options.behavior || []
+    for (let i = 0; i < this.behaviors.length; i++) {
+      this.behaviors[i].onCreate(this)
     }
 
     Game.$addEntity(this)
   }
 
-  public getComponent(name: string): Component | undefined {
-    return this.components.find(c => c.name === name)
+  public getComponent(name: string): Behavior | undefined {
+    return this.behaviors.find(c => c.name === name)
   }
 
   public destroy(): void {
@@ -38,20 +39,20 @@ export default class Entity {
   }
 
   public onUpdate(): void {
-    for (let i = 0; i < this.components.length; i++) {
-      this.components[i].onUpdate(this)
+    for (let i = 0; i < this.behaviors.length; i++) {
+      this.behaviors[i].onUpdate(this)
     }
   }
 
   public onPreRender(): void {
-    for (let i = 0; i < this.components.length; i++) {
-      this.components[i].onPreRender(this)
+    for (let i = 0; i < this.behaviors.length; i++) {
+      this.behaviors[i].onPreRender(this)
     }
   }
 
   public onDestroy(): void {
-    for (let i = 0; i < this.components.length; i++) {
-      this.components[i].onDestroy(this)
+    for (let i = 0; i < this.behaviors.length; i++) {
+      this.behaviors[i].onDestroy(this)
     }
   }
 }

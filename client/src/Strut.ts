@@ -1,16 +1,18 @@
 import Entity from './engine/Entity'
-import Vector from './engine/Vector'
-import PhysicsComponent from './engine/PhysicsComponent'
-import SpriteComponent from './engine/SpriteComponent'
+import Vector from './engine/util/Vector'
+import PhysicalBehavior from './engine/behaviors/PhysicalBehavior'
+import VisualBehavior from './engine/behaviors/VisualBehavior'
 
-export default class Strut {
+export default class Strut extends Entity {
   public constructor(start: Vector, end: Vector) {
-    const dist = end.subtract(start).length()
+    const dist = start.distanceTo(end)
     const size = new Vector(0.5, dist)
 
-    new Entity([
-      new SpriteComponent({ size }),
-      new PhysicsComponent({ size }),
-    ])
+    super({
+      behavior: [
+        new VisualBehavior({ size }),
+        new PhysicalBehavior({ size }),
+      ],
+    })
   }
 }

@@ -1,17 +1,17 @@
-import Component from './Component'
-import Graphics from './Graphics'
-import Entity from './Entity'
-import Vector from './Vector'
-import Sprite from './Sprite'
+import Behavior from './Behavior'
+import Graphics from '../graphics/Graphics'
+import Entity from '../Entity'
+import Vector from '../util/Vector'
+import Sprite from '../graphics/Sprite'
 
-interface SpriteComponentOptions {
+interface VisualBehaviorOptions {
   size?: number | Vector
 }
 
-export default class SpriteComponent extends Component {
+export default class VisualBehavior extends Behavior {
   public sprite: Sprite
 
-  public constructor(options: SpriteComponentOptions = {}) {
+  public constructor(options: VisualBehaviorOptions = {}) {
     super('sprite')
 
     let { size } = options
@@ -22,7 +22,7 @@ export default class SpriteComponent extends Component {
       size = new Vector(1, 1)
     }
 
-    this.sprite = Graphics.addCube(size)
+    this.sprite = Graphics.createSprite(size)
   }
 
   public onPreRender(entity: Entity): void {

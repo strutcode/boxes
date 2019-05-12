@@ -1,7 +1,7 @@
 import * as twgl from 'twgl.js'
 
 import Graphics from './Graphics'
-import Transform from './Transform'
+import Transform from '../util/Transform'
 import vs from './vs.glsl'
 import fs from './fs.glsl'
 

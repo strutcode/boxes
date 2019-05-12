@@ -1,6 +1,6 @@
-import Entity from './Entity'
+import Entity from '../Entity'
 
-export default abstract class Component {
+export default abstract class Behavior {
   public readonly name: string
 
   public constructor(name: string) {
