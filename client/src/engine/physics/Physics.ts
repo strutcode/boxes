@@ -12,24 +12,19 @@ const velocityIterations = 6
 const positionIterations = 2
 
 export default class Physics {
-  public static gravity: b2Vec2
-  private static world: b2World
-  private static time: number = 0
+  public gravity: b2Vec2
+  private world: b2World
+  private time: number = 0
 
-  public static initialize(): void {
+  public constructor() {
     Log.info('Initializing physics')
 
     Log.debug('- Create world')
     this.gravity = new b2Vec2(0, 9.87)
     this.world = new b2World(this.gravity)
-
-    // Log.debug('- Starting world step loop')
-    // setInterval(() => {
-    //   this.world.Step(timeStep, velocityIterations, positionIterations)
-    // }, 1000 / frameRate)
   }
 
-  public static update(delta: number): void {
+  public update(delta: number): void {
     this.time += delta
 
     while (this.time >= timeStep) {
@@ -38,7 +33,7 @@ export default class Physics {
     }
   }
 
-  public static createBox(size: Vector, fixed: boolean = false): PhysicsBody {
+  public createBox(size: Vector, fixed: boolean = false): PhysicsBody {
     const body = new PhysicsBody(this.world, fixed)
     body.setBox(size.x, size.y)
     return body

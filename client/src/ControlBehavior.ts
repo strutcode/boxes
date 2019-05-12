@@ -15,7 +15,7 @@ export default class ControlBehavior extends Behavior {
     super('control')
   }
 
-  public onCreate(entity: Entity): void {
+  public onCreate(): void {
     window.addEventListener('keydown', (ev: KeyboardEvent) => {
       this.active[ev.key.toLowerCase()] = true
     })

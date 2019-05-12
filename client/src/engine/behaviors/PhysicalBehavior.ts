@@ -1,5 +1,4 @@
 import Behavior from './Behavior'
-import Physics from '../physics/Physics'
 import Entity from '../Entity'
 import Vector from '../util/Vector'
 import PhysicsBody from '../physics/PhysicsBody'
@@ -10,28 +9,35 @@ interface PhysicalBehaviorOptions {
 }
 
 export default class PhysicalBehavior extends Behavior {
-  public body: PhysicsBody
+  public body: PhysicsBody | undefined
+  public options: PhysicalBehaviorOptions
 
   public constructor(options: PhysicalBehaviorOptions = {}) {
     super('physics')
 
-    let { size } = options
-    if (typeof size === 'number') {
-      size = new Vector(size, size)
-    }
-    if (typeof size === 'undefined') {
-      size = new Vector(1, 1)
-    }
-
-    this.body = Physics.createBox(size, options.fixed)
+    this.options = options
   }
 
   public onCreate(entity: Entity): void {
+    const { size } = this.options
+    let vecSize: Vector
+
+    if (size instanceof Vector) {
+      vecSize = size
+    }
+    else if (typeof size === 'number') {
+      vecSize = new Vector(size, size)
+    }
+    else {
+      vecSize = new Vector(1, 1)
+    }
+
+    this.body = entity.game.physics.createBox(vecSize, this.options.fixed)
     this.body.setTransform(entity.transform)
   }
 
   public onUpdate(entity: Entity): void {
-    const { transform } = this.body
+    const { transform } = this.body as PhysicsBody
 
     entity.transform.x = transform.x
     entity.transform.y = transform.y
@@ -39,6 +45,6 @@ export default class PhysicalBehavior extends Behavior {
   }
 
   public addForce(amount: Vector): void {
-    this.body.addForce(amount)
+    (this.body as PhysicsBody).addForce(amount)
   }
 }

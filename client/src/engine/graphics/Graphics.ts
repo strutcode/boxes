@@ -12,13 +12,13 @@ const { m4 } = twgl
 export default class Graphics {
   // private static engine: Engine
   // private static scene: Scene
-  private static element: HTMLDivElement
+  private element: HTMLDivElement
   // public static camera: PanCamera2d
 
-  private static gl: WebGLRenderingContext
-  private static sprites: Sprite[] = []
+  private gl: WebGLRenderingContext
+  private sprites: Sprite[] = []
 
-  public static initialize(): void {
+  public constructor() {
     Log.info('Initializing graphics')
     Log.debug('- Creating canvas')
 
@@ -54,7 +54,7 @@ export default class Graphics {
     this.gl = ctx
   }
 
-  public static render(time: number): void {
+  public render(time: number): void {
     // this.scene.render()
 
     const { gl } = this
@@ -70,7 +70,11 @@ export default class Graphics {
     }
   }
 
-  public static getViewProjection(): twgl.m4.Mat4 {
+  public getWebglContext(): WebGLRenderingContext {
+    return this.gl
+  }
+
+  public getViewProjection(): twgl.m4.Mat4 {
     const h = 20
     const w = h * (this.gl.canvas.width / this.gl.canvas.height)
 
@@ -81,15 +85,15 @@ export default class Graphics {
     return m4.multiply(projection, view)
   }
 
-  public static createSprite(size: Vector): Sprite {
-    const sprite = new Sprite(this.gl, size.x, size.y)
+  public createSprite(size: Vector): Sprite {
+    const sprite = new Sprite(this, size.x, size.y)
 
     this.sprites.push(sprite)
 
     return sprite
   }
 
-  public static getDomElement(): HTMLDivElement {
+  public getDomElement(): HTMLDivElement {
     return this.element
   }
 }

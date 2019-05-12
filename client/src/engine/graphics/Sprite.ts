@@ -9,12 +9,15 @@ const { m4 } = twgl
 
 export default class Sprite {
   public transform: Transform = new Transform()
+  private graphics: Graphics
   private programInfo: twgl.ProgramInfo
   private bufferInfo: twgl.BufferInfo
   private tex: WebGLTexture
   // private mesh: Mesh
 
-  public constructor(gl: WebGLRenderingContext, width: number, height: number) {
+  public constructor(graphics: Graphics, width: number, height: number) {
+    this.graphics = graphics
+    const gl = graphics.getWebglContext()
     // this.mesh = MeshBuilder.CreateBox('cube', { width, height })
     this.programInfo = twgl.createProgramInfo(gl, [vs, fs])
 
@@ -49,10 +52,16 @@ export default class Sprite {
   }
 
   public render(gl: WebGLRenderingContext): void {
-    const world = m4.rotateZ(m4.translate(m4.identity(), [this.transform.x, this.transform.y, 0]), this.transform.r)
+    const world = m4.rotateZ(
+      m4.translate(
+        m4.identity(),
+        [this.transform.x, this.transform.y, 0],
+      ),
+      this.transform.r,
+    )
 
     const uniforms = {
-      worldViewProjection: m4.multiply(Graphics.getViewProjection(), world),
+      worldViewProjection: m4.multiply(this.graphics.getViewProjection(), world),
       diffuseTex: this.tex,
     }
 

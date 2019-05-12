@@ -10,32 +10,24 @@ export interface EntityOptions {
 }
 
 export default class Entity {
-  private behaviors: Behavior[]
+  public readonly game: Game
   public readonly transform: Transform = new Transform()
+  private behaviors: Behavior[]
 
-  public constructor(options: EntityOptions = {}) {
-    const defaults: EntityOptions = {
-      x: 0,
-      y: 0,
-      r: 0,
-    }
+  public constructor(game: Game, options: EntityOptions = {}) {
+    if (options.x) this.transform.x = options.x
+    if (options.y) this.transform.y = options.y
+    if (options.r) this.transform.r = options.r
 
-    Object.assign(this.transform, defaults, options)
-
+    this.game = game
     this.behaviors = options.behavior || []
     for (let i = 0; i < this.behaviors.length; i++) {
       this.behaviors[i].onCreate(this)
     }
-
-    Game.$addEntity(this)
   }
 
   public getComponent(name: string): Behavior | undefined {
     return this.behaviors.find(c => c.name === name)
-  }
-
-  public destroy(): void {
-    Game.$remEntity(this)
   }
 
   public onUpdate(): void {

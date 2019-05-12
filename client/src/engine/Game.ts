@@ -5,23 +5,24 @@ import Entity, { EntityOptions } from './Entity'
 import Scene from './Scene'
 
 export default class Game {
-  private static lastTime: number = performance.now()
-  private static entities: Entity[] = []
-  private static activeScene: Scene | null = null
+  private lastTime: number = performance.now()
+  private entities: Entity[] = []
+  private activeScene: Scene | null = null
 
-  public static initialize(): void {
+  public readonly graphics: Graphics
+  public readonly physics: Physics
+
+  public constructor() {
     Log.info('Game starting')
-    Graphics.initialize()
-    Physics.initialize()
+    this.graphics = new Graphics()
+    this.physics = new Physics()
 
     window.requestAnimationFrame((t) => {
       this.update(t)
     })
   }
 
-  public static runScene(scene: Scene): void {}
-
-  private static update(time: number): void {
+  private update(time: number): void {
     const currentTime = performance.now()
     const dt = (currentTime - this.lastTime) / 1000
 
@@ -30,12 +31,12 @@ export default class Game {
       this.entities[i].onUpdate()
     }
 
-    Physics.update(dt)
+    this.physics.update(dt)
 
     for (i = 0; i < this.entities.length; i++) {
       this.entities[i].onPreRender()
     }
-    Graphics.render(time)
+    this.graphics.render(time)
 
     this.lastTime = currentTime
 
@@ -44,19 +45,15 @@ export default class Game {
     })
   }
 
-  public static on(event: string, callback: (event: Event) => void): void {
-    window.addEventListener(event, callback)
-  }
+  // public on(event: string, callback: (event: Event) => void): void {
+  //   window.addEventListener(event, callback)
+  // }
 
-  public static createEntity(options: EntityOptions): Entity {
-    return new Entity(options)
-  }
+  public createEntity(options: EntityOptions): Entity {
+    const entity = new Entity(this, options)
 
-  public static $addEntity(ent: Entity): void {
-    this.entities.push(ent)
-  }
+    this.entities.push(entity)
 
-  public static $remEntity(ent: Entity): void {
-    this.entities = this.entities.filter(e => e !== ent)
+    return entity
   }
 }

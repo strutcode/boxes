@@ -1,5 +1,4 @@
 import Behavior from './Behavior'
-import Graphics from '../graphics/Graphics'
 import Entity from '../Entity'
 import Vector from '../util/Vector'
 import Sprite from '../graphics/Sprite'
@@ -9,23 +8,33 @@ interface VisualBehaviorOptions {
 }
 
 export default class VisualBehavior extends Behavior {
-  public sprite: Sprite
+  public sprite: Sprite | undefined
+  private options: VisualBehaviorOptions
 
   public constructor(options: VisualBehaviorOptions = {}) {
     super('sprite')
 
-    let { size } = options
-    if (typeof size === 'number') {
-      size = new Vector(size, size)
+    this.options = options
+  }
+
+  public onCreate(entity: Entity): void {
+    const { size } = this.options
+    let vecSize
+
+    if (size instanceof Vector) {
+      vecSize = size
     }
-    if (typeof size === 'undefined') {
-      size = new Vector(1, 1)
+    else if (typeof size === 'number') {
+      vecSize = new Vector(size, size)
+    }
+    else {
+      vecSize = new Vector(1, 1)
     }
 
-    this.sprite = Graphics.createSprite(size)
+    this.sprite = entity.game.graphics.createSprite(vecSize)
   }
 
   public onPreRender(entity: Entity): void {
-    this.sprite.setTransform(entity.transform.x, entity.transform.y, entity.transform.r)
+    (this.sprite as Sprite).setTransform(entity.transform.x, entity.transform.y, entity.transform.r)
   }
 }
