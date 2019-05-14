@@ -13,12 +13,10 @@ export default class Sprite {
   private programInfo: twgl.ProgramInfo
   private bufferInfo: twgl.BufferInfo
   private tex: WebGLTexture
-  // private mesh: Mesh
 
   public constructor(graphics: Graphics, width: number, height: number) {
     this.graphics = graphics
     const gl = graphics.getWebglContext()
-    // this.mesh = MeshBuilder.CreateBox('cube', { width, height })
     this.programInfo = twgl.createProgramInfo(gl, [vs, fs])
 
     this.tex = twgl.createTexture(gl, {

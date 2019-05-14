@@ -2,13 +2,14 @@ import * as twgl from 'twgl.js'
 import Log from '../util/Log'
 import Vector from '../util/Vector'
 import Sprite from './Sprite'
+import Camera2d from './Camera2d'
 
 const { m4 } = twgl
 
 export default class Graphics {
   private element: HTMLDivElement
-
   private gl: WebGLRenderingContext
+  private activeCamera: Camera2d | null = null
   private sprites: Sprite[] = []
 
   public constructor() {
@@ -36,17 +37,31 @@ export default class Graphics {
     this.gl = ctx
   }
 
+  public createSprite(size: Vector): Sprite {
+    const sprite = new Sprite(this, size.x, size.y)
+
+    this.sprites.push(sprite)
+
+    return sprite
+  }
+
+  public setActiveCamera(camera: Camera2d): void {
+    this.activeCamera = camera
+  }
+
   public render(time: number): void {
     const { gl } = this
 
-    gl.clearColor(0.5, 0.5, 0.5, 1)
-    gl.clear(gl.COLOR_BUFFER_BIT)
+    if (this.activeCamera) {
+      this.activeCamera.render(gl)
 
-    twgl.resizeCanvasToDisplaySize(gl.canvas)
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-
-    for (let i = 0; i < this.sprites.length; i++) {
-      this.sprites[i].render(gl)
+      for (let i = 0; i < this.sprites.length; i++) {
+        this.sprites[i].render(gl)
+      }
+    }
+    else {
+      gl.clearColor(0, 0, 0, 1)
+      gl.clear(gl.COLOR_BUFFER_BIT)
     }
   }
 
@@ -55,22 +70,8 @@ export default class Graphics {
   }
 
   public getViewProjection(): twgl.m4.Mat4 {
-    const h = 20
-    const w = h * (this.gl.canvas.width / this.gl.canvas.height)
-
-    const projection = m4.ortho(-w, w, h, -h, 0, 10)
-    const camera = m4.lookAt([0, 0, 0], [0, 0, -1], [0, 1, 0])
-    const view = m4.inverse(camera)
-
-    return m4.multiply(projection, view)
-  }
-
-  public createSprite(size: Vector): Sprite {
-    const sprite = new Sprite(this, size.x, size.y)
-
-    this.sprites.push(sprite)
-
-    return sprite
+    if (!this.activeCamera) return m4.identity()
+    return this.activeCamera.viewProjection
   }
 
   public getDomElement(): HTMLDivElement {

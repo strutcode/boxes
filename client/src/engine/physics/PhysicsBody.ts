@@ -52,11 +52,11 @@ export default class PhysicsBody {
   }
 
   public get transform(): Transform {
-    return {
-      x: this.body.GetPosition().x,
-      y: this.body.GetPosition().y,
-      r: this.body.GetAngle(),
-    }
+    return new Transform(
+      this.body.GetPosition().x,
+      this.body.GetPosition().y,
+      this.body.GetAngle(),
+    )
   }
 
   public addForce(amount: Vector): void {

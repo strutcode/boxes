@@ -1,14 +1,14 @@
-import Game from './engine/Game'
 import Vector from './engine/util/Vector'
 import PhysicalBehavior from './engine/behaviors/PhysicalBehavior'
 import VisualBehavior from './engine/behaviors/VisualBehavior'
+import Entity from './engine/entities/Entity'
 
-export default class Strut {
+export default class Strut extends Entity {
   public constructor(start: Vector, end: Vector) {
     const dist = start.distanceTo(end)
     const size = new Vector(0.5, dist)
 
-    Game.createEntity({
+    super({
       behavior: [
         new VisualBehavior({ size }),
         new PhysicalBehavior({ size }),

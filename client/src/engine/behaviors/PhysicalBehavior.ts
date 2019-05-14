@@ -1,6 +1,6 @@
 import Game from '../Game'
 import Behavior from './Behavior'
-import Entity from '../Entity'
+import Entity from '../entities/Entity'
 import Vector from '../util/Vector'
 import PhysicsBody from '../physics/PhysicsBody'
 

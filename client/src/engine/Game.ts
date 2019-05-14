@@ -1,10 +1,13 @@
 import Graphics from './graphics/Graphics'
 import Physics from './physics/Physics'
 import Log from './util/Log'
-import Entity, { EntityOptions } from './Entity'
+import Entity from './entities/Entity'
 import Scene from './Scene'
+import GameEvent from './GameEvent'
+import GameObject from './GameObject'
+import GameEventType, { domEventName } from './GameEventType'
 
-export default class Game {
+export default class Game extends GameObject {
   private static lastTime: number = performance.now()
   private static entities: Entity[] = []
   private static activeScene: Scene | null = null
@@ -38,6 +41,9 @@ export default class Game {
     }
     this.graphics.render(time)
 
+    for (i = 0; i < this.entities.length; i++) {
+      this.entities[i].onLateUpdate()
+    }
     this.lastTime = currentTime
 
     window.requestAnimationFrame((t) => {
@@ -45,15 +51,14 @@ export default class Game {
     })
   }
 
-  // public static on(event: string, callback: (event: Event) => void): void {
-  //   window.addEventListener(event, callback)
-  // }
+  public static on(event: GameEventType, callback: (event: GameEvent) => void): void {
+    const eventName = domEventName(event)
+    this.graphics.getDomElement().addEventListener(eventName, () => {
+      callback(new GameEvent(event, this))
+    })
+  }
 
-  public static createEntity(options: EntityOptions): Entity {
-    const entity = new Entity(options)
-
+  public static addEntity(entity: Entity): void {
     this.entities.push(entity)
-
-    return entity
   }
 }

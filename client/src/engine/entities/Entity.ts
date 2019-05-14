@@ -1,6 +1,7 @@
-import Behavior from './behaviors/Behavior'
-import Game from './Game'
-import Transform from './util/Transform'
+import Behavior from '../behaviors/Behavior'
+import Transform from '../util/Transform'
+import GameObject from '../GameObject'
+import Game from '../Game'
 
 export interface EntityOptions {
   x?: number
@@ -9,11 +10,13 @@ export interface EntityOptions {
   behavior?: Behavior[]
 }
 
-export default class Entity {
+export default class Entity extends GameObject {
   public readonly transform: Transform = new Transform()
   private behaviors: Behavior[]
 
   public constructor(options: EntityOptions = {}) {
+    super()
+
     if (options.x) this.transform.x = options.x
     if (options.y) this.transform.y = options.y
     if (options.r) this.transform.r = options.r
@@ -22,15 +25,29 @@ export default class Entity {
     for (let i = 0; i < this.behaviors.length; i++) {
       this.behaviors[i].onCreate(this)
     }
+
+    Game.addEntity(this)
   }
 
-  public getComponent(name: string): Behavior | undefined {
-    return this.behaviors.find(c => c.name === name)
+  public getBehavior<T extends Behavior>(behavior: new () => T): T | undefined {
+    const instance = this.behaviors.find(c => c instanceof behavior)
+
+    if (instance) {
+      return instance as T
+    }
+
+    return undefined
   }
 
   public onUpdate(): void {
     for (let i = 0; i < this.behaviors.length; i++) {
       this.behaviors[i].onUpdate(this)
+    }
+  }
+
+  public onLateUpdate(): void {
+    for (let i = 0; i < this.behaviors.length; i++) {
+      this.behaviors[i].onLateUpdate(this)
     }
   }
 

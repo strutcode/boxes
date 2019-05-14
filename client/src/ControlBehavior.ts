@@ -1,5 +1,5 @@
 import Behavior from './engine/behaviors/Behavior'
-import Entity from './engine/Entity'
+import Entity from './engine/entities/Entity'
 import PhysicalBehavior from './engine/behaviors/PhysicalBehavior'
 import Vector from './engine/util/Vector'
 
@@ -26,7 +26,7 @@ export default class ControlBehavior extends Behavior {
   }
 
   public onUpdate(entity: Entity): void {
-    const physics = entity.getComponent('physics') as PhysicalBehavior
+    const physics = entity.getBehavior(PhysicalBehavior) as PhysicalBehavior
 
     if (this.active.a) {
       physics.addForce(new Vector(-this.speed, 0))

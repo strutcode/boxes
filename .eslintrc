@@ -46,7 +46,7 @@
   },
   "overrides": [
     {
-      "files": ["test/**/*.*"],
+      "files": ["**/*.spec.[jt]s"],
       "env": {
         "mocha": true
       },

@@ -3,8 +3,8 @@ services:
   postgres:
     image: postgres:9.6.2-alpine
     environment:
-      POSTGRES_USER: forts
-      POSTGRES_DB: forts
+      POSTGRES_USER: boxes
+      POSTGRES_DB: boxes
   web:
     depends_on:
       - postgres
@@ -14,6 +14,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://forts@postgres/forts
+      DATABASE_URL: postgres://boxes@postgres/boxes
       NODE_ENV: development
     command: npm run dev
